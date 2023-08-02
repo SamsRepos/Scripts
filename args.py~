@@ -1,3 +1,0 @@
-from sys import argv
-
-print(f"Number of arguments: {len(argv)}")
