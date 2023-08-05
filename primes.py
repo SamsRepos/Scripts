@@ -57,9 +57,10 @@ def lcm(a, b):
 # functions: primes <num>
 #            lcm    <a> <b>
 #            hcf    <a> <b>
-#            rprimes <rangemax>
-#            rlcm    <rangemax>
-#            rhcf    <rangemax>
+#            rprimes <range_max>
+#            rlcm    <range_max>
+#            rhcf    <range_max>
+#            rhcf    <range_max> <res_min>
 
 def print_primes(a):
   print(f"{a}: {prime_factors(a)}")
@@ -97,13 +98,16 @@ def rlcm(range_max):
     for j in range((i+1), range_max):
       print_lcm(i, j)
 
-def rhcf(range_max):
+def rhcf(range_max, res_min):
   if range_max <= 2:
     # TODO: print error
     return
 
   for i in range(2, range_max):
     for j in range((i+1), range_max):
+      if res_min and hcf(i, j) < res_min:
+        continue
+      
       print_hcf(i, j)
 
 def func(funcArg, a, b=None):
@@ -119,7 +123,7 @@ def func(funcArg, a, b=None):
     case("rlcm"):
       rlcm(a)
     case("rhcf"):
-      rhcf(a)
+      rhcf(a, b)
 
 if len(argv) > 2:
   funcArg = argv[1]
