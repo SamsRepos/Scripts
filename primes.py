@@ -75,7 +75,7 @@ def print_lcm(a, b):
   
 def print_hcf(a, b):
   res = hcf(a, b)
-  print(f"lcm({a}, {b}) = {res}")
+  print(f"hcf({a}, {b}) = {res}")
   print_primes(a)
   print_primes(b)
   print_primes(res)
