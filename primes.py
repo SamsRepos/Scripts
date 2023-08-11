@@ -57,10 +57,11 @@ def lcm(a, b):
 # functions: primes <num>
 #            lcm    <a> <b>
 #            hcf    <a> <b>
-#            rprimes <range_max>
-#            rlcm    <range_max>
-#            rhcf    <range_max>
-#            rhcf    <range_max> <res_min>
+#            r_primes <range_max>
+#            r_lcm    <range_max>
+#            r_hcf    <range_max>
+#            r_hcf    <range_max_a> <range_max_b>
+#            r_hcf    <range_max_a> <range_max_b> <res_min>
 
 def print_primes(a):
   print(f"{a}: {prime_factors(a)}")
@@ -81,7 +82,7 @@ def print_hcf(a, b):
   print_primes(res)
   print("")
 
-def rprimes(range_max):
+def r_primes(range_max):
   if range_max <= 2:
     # TODO: print error
     return
@@ -89,7 +90,7 @@ def rprimes(range_max):
   for i in range(2, range_max):
     print_primes(i)
 
-def rlcm(range_max):
+def r_lcm(range_max):
   if range_max <= 2:
     # TODO: print error
     return
@@ -98,19 +99,22 @@ def rlcm(range_max):
     for j in range((i+1), range_max):
       print_lcm(i, j)
 
-def rhcf(range_max, res_min):
-  if range_max <= 2:
+def r_hcf(range_max_a, range_max_b, res_min):
+  if range_max_a <= 2 or (range_max_b and range_max_b <2):
     # TODO: print error
     return
 
-  for i in range(2, range_max):
-    for j in range((i+1), range_max):
+  if not range_max_b:
+    range_max_b = range_max_a
+  
+  for i in range(2, range_max_a):
+    for j in range((i+1), range_max_b):
       if res_min and hcf(i, j) < res_min:
         continue
       
       print_hcf(i, j)
 
-def func(funcArg, a, b=None):
+def func(funcArg, a, b=None, c=None):
   match funcArg:
     case("primes"):
       print_primes(a)
@@ -118,12 +122,12 @@ def func(funcArg, a, b=None):
       print_lcm(a, b)
     case("hcf"):
       print_hcf(a, b)
-    case("rprimes"):
-      rprimes(a)
-    case("rlcm"):
-      rlcm(a)
-    case("rhcf"):
-      rhcf(a, b)
+    case("r_primes"):
+      r_primes(a)
+    case("r_lcm"):
+      r_lcm(a)
+    case("r_hcf"):
+      r_hcf(a, b, c)
 
 if len(argv) > 2:
   funcArg = argv[1]
@@ -133,7 +137,10 @@ if len(argv) > 2:
   elif len(argv) == 4:
     b = int(argv[3])
     func(funcArg, a, b)
-
+  elif len(argv) == 5:
+    b = int(argv[3])
+    c = int(argv[4])
+    func(funcArg, a, b, c)
 
   
 """  
