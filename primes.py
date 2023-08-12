@@ -53,15 +53,18 @@ def lcm(a, b):
   return res
 
 
-# arg usage: <function> <function args>
-# functions: primes <num>
-#            lcm    <a> <b>
-#            hcf    <a> <b>
-#            r_primes <range_max>
-#            r_lcm    <range_max>
-#            r_hcf    <range_max>
-#            r_hcf    <range_max_a> <range_max_b>
-#            r_hcf    <range_max_a> <range_max_b> <res_min>
+usage = """
+  arg usage: <function> <function args>
+  functions: primes <num>
+             lcm    <a> <b>
+             hcf    <a> <b>
+             r_primes <range_max>
+             r_lcm    <range_max>
+             r_hcf    <range_max>
+             r_hcf    <range_max_a> <range_max_b>
+             r_hcf    <range_max_a> <range_max_b> <res_min>
+"""
+
 
 def print_primes(a):
   print(f"{a}: {prime_factors(a)}")
@@ -116,6 +119,8 @@ def r_hcf(range_max_a, range_max_b, res_min):
 
 def func(funcArg, a, b=None, c=None):
   match funcArg:
+    case("usage"):
+      print(usage)
     case("primes"):
       print_primes(a)
     case("lcm"):
@@ -129,18 +134,25 @@ def func(funcArg, a, b=None, c=None):
     case("r_hcf"):
       r_hcf(a, b, c)
 
-if len(argv) > 2:
+if len(argv) >= 2:
   funcArg = argv[1]
-  a = int(argv[2])
-  if len(argv) == 3:
-    func(funcArg, a)
-  elif len(argv) == 4:
+
+  if len(argv) >= 3:
+    a = int(argv[2])
+  else:
+    a = None
+
+  if len(argv) >= 4:
     b = int(argv[3])
-    func(funcArg, a, b)
-  elif len(argv) == 5:
-    b = int(argv[3])
+  else:
+    b = None
+
+  if len(argv) >= 5:
     c = int(argv[4])
-    func(funcArg, a, b, c)
+  else:
+    c = None
+    
+  func(funcArg, a, b, c)
 
   
 """  
