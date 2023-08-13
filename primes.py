@@ -55,11 +55,17 @@ def lcm(a, b):
 
 usage = """
   arg usage: <function> <function args>
-  functions: primes <num>
+
+  functions:
+             primes <num>
              lcm    <a> <b>
              hcf    <a> <b>
+
              r_primes <range_max>
-             r_lcm    <range_max>
+
+             r_lcm         <range_max>
+             r_lcm_nomult  <range_max> -- omits outputs where lcm(a, b) = ab
+
              r_hcf    <range_max>
              r_hcf    <range_max_a> <range_max_b>
              r_hcf    <range_max_a> <range_max_b> <res_min>
@@ -93,13 +99,16 @@ def r_primes(range_max):
   for i in range(2, range_max):
     print_primes(i)
 
-def r_lcm(range_max):
+def r_lcm(range_max, no_mult=False):
   if range_max <= 2:
     # TODO: print error
     return
 
   for i in range(2, range_max):
     for j in range((i+1), range_max):
+      if no_mult and lcm(i, j) == i*j:
+        continue
+      
       print_lcm(i, j)
 
 def r_hcf(range_max_a, range_max_b, res_min):
@@ -131,6 +140,8 @@ def func(funcArg, a, b=None, c=None):
       r_primes(a)
     case("r_lcm"):
       r_lcm(a)
+    case("r_lcm_nomult"):
+      r_lcm(a, True)
     case("r_hcf"):
       r_hcf(a, b, c)
 
@@ -154,34 +165,3 @@ if len(argv) >= 2:
     
   func(funcArg, a, b, c)
 
-  
-"""  
-RANGE = 25
-
-for i in range(2, RANGE):
-  print(repr(i) + ":")
-  print(" " + repr(prime_factors(i)))
-  print("")    
-
-for i in range(2, RANGE):
-  for j in range((i+1), RANGE):
-    res = lcm(i, j)
-    print(f"lcm({i}, {j}) = {res}")
-
-for i in range(2, RANGE):
-  for j in range((i+1), RANGE):x
-    res = hcf(i, j)
-    if res > 1:
-      print(f"hcf({i}, {j}) = {res}")
-
-for i in range(2, RANGE):
-  for j in range((i+1), RANGE):
-    res = lcm(i, j)
-    if res == i * j or res == i or res == j:
-      continue
-    print(f"lcm({i}, {j}) = {res}")
-    print(f"{i}: {prime_factors(i)}")
-    print(f"{j}: {prime_factors(j)}")
-    print(f"{res}: {prime_factors(res)}")
-    print("")
-"""
